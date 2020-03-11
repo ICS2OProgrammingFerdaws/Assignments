@@ -26,16 +26,20 @@ triangleText.y = 300
 -- set the colour of the newText
 triangleText:setTextColor(1, 1, 1)
 
-local verticesHexagon = {-30,30, -5,30, -30,23, 30,25 -10,25, -5,25, 30,23, 0,-30}
-local hexagon = display.newPolygon(256,192, verticesHexagon )
+local verticesPentagon = {-90,-120, 100,-90, 80,60, -120,60, -160,0,}
+local pentagon = display.newPolygon(256,192, verticesPentagon )
 local textSize = 50
 
 
-hexagon:setFillColor(0.9,0.3,0.5)
+pentagon:setFillColor(0.9,0.3,0.5)
+
+pentagonText = display.newText("Pentagon", 0, 0, Arial, textSize)
 
 -- anchor the text and set its (x,y) position 
-hexagonText.anchorX = 0
-hexagonText.anchorY = 0
-hexagonText.x = 700
-hexagonText.y = 300
+pentagonText.anchorX = 0
+pentagonText.anchorY = 0
+pentagonText.x = 180
+pentagonText.y = 300
 
+local verticesHexagon = {100,-120, 70,120, 80,120, 80,-120, 0,-120, 120,0}
+local hexagon = display.newPolygon(256,576, verticesHexagon)
