@@ -41,5 +41,5 @@ pentagonText.anchorY = 0
 pentagonText.x = 180
 pentagonText.y = 300
 
-local verticesHexagon = {100,-120, 70,120, 80,120, 80,-120, 0,-120, 120,0}
+local verticesHexagon = {100,-120, 70,120, 80,120, 80,-120, }
 local hexagon = display.newPolygon(256,576, verticesHexagon)
