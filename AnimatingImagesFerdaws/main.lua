@@ -144,4 +144,4 @@ local function MoveSnoop( event )
 	snoopDogg.alpha = snoopDogg.alpha + 0.01
 end
 
-Runtime:addEventListener("event", MoveSnoop)
+Runtime:addEventListener("enterFrame", MoveSnoop)
