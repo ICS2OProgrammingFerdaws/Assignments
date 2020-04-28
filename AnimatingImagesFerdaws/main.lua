@@ -164,6 +164,10 @@ Runtime:addEventListener("enterFrame", MoveTupac)
 -- GROW IN SIZE
 --------------------------------------------------------------------------------------------------------------------
 
-eminem:scale(2,0.5)
+local function GrowEminem(event)
+	eminem:scale(0.3,0.5)
+end
+
+eminem:addEventListener("enterFrame", GrowEminem)
 
 
