@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------------------------
--- Name:Ferdaws
--- 
---
+--Title: MathQuiz
+-- Name: Ferdaws
+-- Course: ICS2O/3C
 ----------------------------------------------------------------------------------------------
 -- STATUS BAR
 -----------------------------------------------------------------------------------------------------
@@ -22,25 +22,64 @@ local randomNumber1
 local randomNumber2
 local userAnswer
 local correctAnswer
-local lives 
-
-
+local totalSeconds = 5
+local secondsLeft = 5
+local clockText 
+local countDownTimer
+local lives = 3 
+local heart1
+local heart2
+local heart3
+local randomOperator
+local randomOperator2
 ----------------------------------------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIN
 ----------------------------------------------------------------------------------------------------------------------------------------------------
 
-local function AskQuestion(  )
-	-- generate 2 random numbers between a max. and main. number
-	randomNumber1 = math.random(0,20)
-	randomNumber2 = math.random(0,20)
+local function AskQuestion()
+  -- generated 2 random numbers between a max. and a main. number
+  randomOperator = math.random(1,2)
 
-	correctAnswer = randomNumber1+randomNumber2
+  randomNumber1 = math.random(0, 8)
+  randomNumber2 = math.random(0, 8)
+  if (randomOperator == 1) then
+     correctAnswer = randomNumber1 + randomNumber2
 
-	-- creat question in text object 
-	questionObject.text = randomNumber1 .. "+" .. randomNumber2 .."="
+     -- create question in text object 
+     questionObject.text = randomNumber1 .."+".. randomNumber2 .."=" 
+
+  elseif (randomOperator == 2) then
+  	 correctAnswer = randomNumber1 - randomNumber2
+  	 questionObject.text = randomNumber1 .. "-" .. randomNumber2
+  end
 end
 
 
+local function AskQuestion2( )
+	randomOperator2 = math.random(3.4)
+	randomNumber1 = math.random(0,10)
+	randomNumber2 = math.random(0,10)
+	if (randomOperator2 == 3) then
+		correctAnswer = randomNumber1 * randomNumber2
+		questionObject.text = randomNumber1 .. "*" .. randomNumber2
+	elseif(randomOperator2 == 4) then
+		correctAnswer = randomNumber1 / randomNumber2
+		questionObject.text = randomNumber1 .. "/" .. randomNumber2
+	end
+end
+
+
+local function HideCorrect()
+  correctObject.isVisible = false
+  AskQuestion()
+end
+
+
+local function HideIncorrect()
+  wrongObject.isVisible = false
+  AskQuestion()
+end
+  
 local function NumericFieldListener( event )
 
   -- User begins editing "numericField"
@@ -57,6 +96,8 @@ local function NumericFieldListener( event )
 
     -- if the users answer and the correct answer are the same:
     if  (userAnswer == correctAnswer) then
+
+      -- give a point if user gets the correct answer 
       correctObject.isVisible = true
       timer.performWithDelay(3000, HideCorrect)
     else
@@ -67,36 +108,8 @@ local function NumericFieldListener( event )
 end
 
 
-local function HideIncorrect()
-  wrongObject.isVisible = false
-  AskQuestion()
-end
 
-local function AskQuestion2( )
 
-	randomNumber1 = math.random(0,20)
-	randomNumber2 = math.random(0,20)
-
-	correctAnswer =  randomNumber1 - randomNumber2
-
-	questionObject.text = randomNumber1 .. "-" .. randomNumber2	
-end
-
-local function numericFieldListener( event )
-
-	if ( event.phase == "began" ) then
-
-		event.target.text=""
-
-	elseif event.phase == "submitted" then
-		userAnswer = tonumber (event.target.text)
-
-		if (userAnswer == correctAnswer) then
-			correctObject.isVisible = true
-		 timer.performWithDelay(2000, HideCorrect)
-		end
-	end
-end
 
 
 
@@ -114,44 +127,30 @@ local function Negative(  )
 end
 
 
-local function AskQuestion3(  )
-
-	randomNumber1 = math.random(0,10)
-	randomNumber2 = math.random(0,10)
-
-	correctAnswer = randomNumber1 * randomNumber2
-
-	questionObject.text = randomNumber1 .. "*" .. randomNumber2
-	
-end
 
 
 
 
-local function AskQuestion4(  )
 
-	randomNumber1 = math.random(0,100)
-	randomNumber2 = math.random(0,100)
+local function UpdateTime( )
+	secondsLeft = secondsLeft - 1
+	clockText.text = secondsLeft .. ""
+	if(secondsLeft == 0 ) then 
+		secondsLeft = totalSeconds
+		lives = lives - 1
 
-	correctAnswer = randomNumber1 / randomNumber2
-
-	questionObject.text = randomNumber1 .. "/" .. randomNumber2	
-end
-local function Division(  )
-
-	if (firstNumber<secondNumber) then
-		correctAnswer = randomNumber2/ randomNumber1
-		questionObject.text = randomNumber2 .. "/" .. randomNumber1
-
-	else
-		correctAnswer = randomNumber1 - randomNumber2
-		questionObject.text = randomNumber1 .. "/" .. randomNumber2
+		if (lives == 3) then
+			heart3.isVisible = false
+		elseif(lives == 2) then
+		 heart2.isVisible = false 
+		end
 	end
-
 end
 
 
-
+local function startTimer( )
+	countDownTimer = timer.performWithDelay(1000, UpdateTime, 0)
+end
 ------------------------------------------------------------------------------------
 --OBJECT CREATION
 ----------------------------------------------------------------------------------------
@@ -163,20 +162,25 @@ correctObject:setTextColor(34/255, 23/255, 79/255)
 correctObject.isVisible = false
 numericField = native.newTextField(display.contentWidth/2, display.contentHeight/2, 120, 100)
 numericField.inputType = "number"
-numericField:addEventListener( "userInput", numericFieldListener )
-wrongObject = display.newText ("Incorrect!", display.contentWidth/2, display.contentHeight/2, nil, 50)
+numericField:addEventListener( "userInput", NumericFieldListener )
+wrongObject = display.newText ("Incorrect!", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
 wrongObject:setTextColor(65/255, 79/255, 3/255)
 wrongObject.isVisible = false
+heart1 = display.newImageRect("Images/heart.png", 100, 100)
+heart1.x = display.contentWidth * 7/ 8
+heart1.y = display.contentHeight * 1 / 7
+heart2 = display.newImageRect("Images/heart.png", 100 , 100)
+heart2.x = display.contentWidth * 6 / 8
+heart2.y = display.contentHeight * 1 / 7
+heart3 = display.newImageRect("Images/heart.png", 100 , 100)
+heart3.x = display.contentWidth * 5 /8
+heart3.y = display.contentHeight * 1 / 7
 
 ------------------------------------------------------------------------------------------------
 --FUNCTION CALLS
 ------------------------------------------------------------------------------------------------
 AskQuestion()
 AskQuestion2()
-AskQuestion3()
-AskQuestion4()
-
-
 
 
 
