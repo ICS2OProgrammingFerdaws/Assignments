@@ -22,16 +22,24 @@ local randomNumber1
 local randomNumber2
 local userAnswer
 local correctAnswer
+
 local totalSeconds = 5
 local secondsLeft = 5
+
 local clockText 
 local countDownTimer
 local lives = 3 
+local numCorrect = 0
+local numWrong = 0
+
 local heart1
 local heart2
 local heart3
 local randomOperator
 local randomOperator2
+
+local youWin 
+local youLose
 ----------------------------------------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIN
 ----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -96,13 +104,28 @@ local function NumericFieldListener( event )
 
     -- if the users answer and the correct answer are the same:
     if  (userAnswer == correctAnswer) then
+      numCorrect = numCorrect + 1
 
-      -- give a point if user gets the correct answer 
-      correctObject.isVisible = true
-      timer.performWithDelay(3000, HideCorrect)
+
+      if (numCorrect == 5) then 
+        youWin.isVisible = true
+        numericField.isVisible = false
+      else
+
+       -- give a point if user gets the correct answer 
+       correctObject.isVisible = true
+       timer.performWithDelay(3000, HideCorrect)
+     end
     else
-      wrongObject.isVisible = true
-      timer.performWithDelay(2000,  HideIncorrect)
+      numWrong = numWrong + 1
+
+      if (numWrong == 3) then
+        youLose.isVisible = true
+        numericField.isVisible = false
+      else
+       wrongObject.isVisible = true
+       timer.performWithDelay(2000,  HideIncorrect)
+     end
     end
   end
 end
@@ -157,15 +180,19 @@ end
 
 questionObject = display.newText("", display.contentWidth/3, display.contentHeight/2, nil, 50 )
 questionObject:setTextColor(32/255,60/255,1/255)
+
 correctObject = display.newText( "Correct", display.contentWidth/2, display.contentHeight*2/3,nil, 50)
 correctObject:setTextColor(34/255, 23/255, 79/255)
 correctObject.isVisible = false
+
 numericField = native.newTextField(display.contentWidth/2, display.contentHeight/2, 120, 100)
 numericField.inputType = "number"
 numericField:addEventListener( "userInput", NumericFieldListener )
+
 wrongObject = display.newText ("Incorrect!", display.contentWidth/2, display.contentHeight*2/3, nil, 50)
 wrongObject:setTextColor(65/255, 79/255, 3/255)
 wrongObject.isVisible = false
+
 heart1 = display.newImageRect("Images/heart.png", 100, 100)
 heart1.x = display.contentWidth * 7/ 8
 heart1.y = display.contentHeight * 1 / 7
@@ -176,6 +203,15 @@ heart3 = display.newImageRect("Images/heart.png", 100 , 100)
 heart3.x = display.contentWidth * 5 /8
 heart3.y = display.contentHeight * 1 / 7
 
+youWin = display.newImageRect("Images/You win.jpg",600 , 600)
+youWin.x = display.contentWidth/2
+youWin.y = display.contentHeight/2
+youWin.isVisible = false
+
+youLose = display.newImageRect("Images/You lose.gif", 600, 600)
+youLose.x = display.contentWidth/2
+youLose.y = display.contentHeight/2
+youLose.isVisible = false
 ------------------------------------------------------------------------------------------------
 --FUNCTION CALLS
 ------------------------------------------------------------------------------------------------
