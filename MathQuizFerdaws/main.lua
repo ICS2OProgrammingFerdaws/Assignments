@@ -36,7 +36,7 @@ local heart1
 local heart2
 local heart3
 local randomOperator
-local randomOperator2
+
 
 local youWin 
 local youLose
@@ -46,7 +46,7 @@ local youLose
 
 local function AskQuestion()
   -- generated 2 random numbers between a max. and a main. number
-  randomOperator = math.random(1,2)
+  randomOperator = math.random(1,4)
 
   randomNumber1 = math.random(0, 8)
   randomNumber2 = math.random(0, 8)
@@ -58,19 +58,21 @@ local function AskQuestion()
 
   elseif (randomOperator == 2) then
   	 correctAnswer = randomNumber1 - randomNumber2
-  	 questionObject.text = randomNumber1 .. "-" .. randomNumber2
-  end
-end
 
+    if (randomNumber1 < randomNumber2) then
+     correctAnswer = randomNumber2- randomNumber1
+     questionObject.text = randomNumber2 .. "-" .. randomNumber1
 
-local function AskQuestion2( )
-	randomOperator2 = math.random(3.4)
-	randomNumber1 = math.random(0,10)
-	randomNumber2 = math.random(0,10)
-	if (randomOperator2 == 3) then
-		correctAnswer = randomNumber1 * randomNumber2
-		questionObject.text = randomNumber1 .. "*" .. randomNumber2
-	elseif(randomOperator2 == 4) then
+   else
+    correctAnswer = randomNumber1 - randomNumber2
+    questionObject.text = randomNumber1 .. "-" .. randomNumber2
+ end   
+  	 
+	elseif (randomOperator == 3) then
+		 correctAnswer = randomNumber1 * randomNumber2
+		 questionObject.text = randomNumber1 .. "*" .. randomNumber2
+	elseif(randomOperator == 4) then
+    local randomNumber3 = randomNumber1 * randomNumber2
 		correctAnswer = randomNumber1 / randomNumber2
 		questionObject.text = randomNumber1 .. "/" .. randomNumber2
 	end
@@ -115,6 +117,7 @@ local function NumericFieldListener( event )
        -- give a point if user gets the correct answer 
        correctObject.isVisible = true
        timer.performWithDelay(3000, HideCorrect)
+       
      end
     else
       numWrong = numWrong + 1
@@ -129,26 +132,6 @@ local function NumericFieldListener( event )
     end
   end
 end
-
-
-
-
-
-
-
-local function Negative(  )
-
-	if (firstNumber<secondNumber) then
-		correctAnswer = randomNumber2- randomNumber1
-		questionObject.text = randomNumber2 .. "-" .. randomNumber1
-
-	else
-		correctAnswer = randomNumber1 - randomNumber2
-		questionObject.text = randomNumber1 .. "-" .. randomNumber2
-	end
-
-end
-
 
 
 
@@ -216,7 +199,6 @@ youLose.isVisible = false
 --FUNCTION CALLS
 ------------------------------------------------------------------------------------------------
 AskQuestion()
-AskQuestion2()
 
 
 
