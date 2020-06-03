@@ -97,8 +97,8 @@ function scene:create( event )
             y = display.contentHeight*7/8,
 
             -- Insert the images here
-            defaultFile = "Images/Start Button Unpressed.png",
-            overFile = "Images/Start Button Pressed.png",
+            defaultFile = "Images/play.png",
+            overFile = "Images/playP.png",
 
             -- When the button is released, call the Level1 screen transition function
             onRelease = Level1ScreenTransition          
@@ -114,8 +114,8 @@ function scene:create( event )
             y = display.contentHeight*7/8,
 
             -- Insert the images here
-            defaultFile = "Images/Credits Button Unpressed.png",
-            overFile = "Images/Credits Button Pressed.png",
+            defaultFile = "Images/Credit.png",
+            overFile = "Images/CreditP.png",
 
             -- When the button is released, call the Credits transition function
             onRelease = CreditsTransition
@@ -128,12 +128,12 @@ function scene:create( event )
     InstructionsButton = widget.newButton( 
         {   
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth/5,
+            x = display.contentWidth/5/1,
             y = display.contentHeight*7/8,
 
             -- Insert the images here
-            defaultFile = "Images/Instructions Button.png",
-            overFile = "Images/Instructions Button Pressed.png",
+            defaultFile = "Images/Instructions.png",
+            overFile = "Images/InstructionsP.png",
 
             -- When the button is released, call the Level1 screen transition function
             onRelease = InstructionsTransition           

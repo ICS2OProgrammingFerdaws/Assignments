@@ -4,7 +4,7 @@
 -- Created by: Ferdaws
 -- Date: May 25, 2020
 -- Description: This is the splash screen of the game. It displays the 
--- company logo that...
+-- company logo that is a flower with a whoosh sound.
 -----------------------------------------------------------------------------------------
 
 -- Use Composer Library
@@ -94,7 +94,7 @@ function scene:show( event )
 
     elseif ( phase == "did" ) then
         -- start the splash screen music
-        jungleSoundsChannel = audio.play( WhooshSounds )
+        WhooshSoundsChannel = audio.play( WhooshSounds )
 
         -- Call the moveIntro function as soon as we enter the frame.
         Runtime:addEventListener("enterFrame", moveIntro)
