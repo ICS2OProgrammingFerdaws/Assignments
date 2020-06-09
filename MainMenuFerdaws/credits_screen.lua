@@ -10,7 +10,8 @@
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
-
+local BoingSound = audio.loadSound("Sounds/BoingSoundEffect.mp3")
+local BoingSoundChannel
 -- Use Composer Libraries
 local composer = require( "composer" )
 local widget = require( "widget" )
@@ -82,8 +83,9 @@ function scene:create( event )
         -- height = 106,
 
         -- Setting Visual Properties
-        defaultFile = "Images/Back Button Unpressed.png",
-        overFile = "Images/Back Button Pressed.png",
+        defaultFile = "Images/Back.png",
+        overFile = "Images/Back Pressed.png",
+        BoingSoundChannel = audio.play(BoingSound),
 
         -- Setting Functional Properties
         onRelease = BackTransition

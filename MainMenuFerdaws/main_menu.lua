@@ -99,6 +99,7 @@ function scene:create( event )
             -- Insert the images here
             defaultFile = "Images/play.png",
             overFile = "Images/playP.png",
+            
 
             -- When the button is released, call the Level1 screen transition function
             onRelease = Level1ScreenTransition          
@@ -110,7 +111,7 @@ function scene:create( event )
     creditsButton = widget.newButton( 
         {
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*7/8,
+            x = display.contentWidth*7/8.7,
             y = display.contentHeight*7/8,
 
             -- Insert the images here

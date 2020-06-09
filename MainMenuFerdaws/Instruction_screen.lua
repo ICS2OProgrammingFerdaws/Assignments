@@ -10,6 +10,8 @@
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
+local PopSound = audio.loadSound("Sounds/Pop.mp3")
+local PopSoundChannel
 
 -- Use Composer Libraries
 local composer = require( "composer" )
@@ -82,8 +84,10 @@ function scene:create( event )
         -- height = 106,
 
         -- Setting Visual Properties
-        defaultFile = "Images/Back Button Unpressed.png",
-        overFile = "Images/Back Button Pressed.png",
+        defaultFile = "Images/Back.png",
+        overFile = "Images/Back Pressed.png",
+        PopSoundChannel = audio.play(PopSound),
+        
 
         -- Setting Functional Properties
         onRelease = BackTransition
