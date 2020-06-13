@@ -56,15 +56,16 @@ function scene:create( event )
         -- Insert background image into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( bkg_image )  
     
-    if (characterChosen = "clashC") then
-       character = display.newImageRect("Images/Clash.png", 200 ,200) 
-    elseif (characterChosen = "pubgC") then
+    if (characterChosen == "clashC") then
+       character = display.newImageRect("Images/Clash.png", 100 ,100) 
+    elseif (characterChosen == "pubgC") then
         character = display.newImageRect("Images/pubg_PNG46.png", 200 ,200)
-    elseif (characterChosen = "foxC") then
+    elseif (characterChosen == "foxC") then
         character = display.newImageRect("Images/Fox.png", 200 ,200)
     end
 
 end --function scene:create( event )
+
 
 -----------------------------------------------------------------------------------------
 
