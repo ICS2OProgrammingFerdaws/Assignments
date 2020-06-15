@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------------------------
 --
--- main_menu.lua
--- Created by: Your Name
+-- character_selection.lua
+-- Created by: Ferdaws
 -- Date: Month Day, Year
 -- Description: This is the main menu, displaying the credits, instructions & play buttons.
 -----------------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     -- Insert the background image and set it to the center of the screen
-    bkg_image = display.newImage("Images/MainMenu.png")
+    bkg_image = display.newImage("Images/Caracter.png")
     bkg_image.x = display.contentCenterX
     bkg_image.y = display.contentCenterY
     bkg_image.width = display.contentWidth
@@ -103,6 +103,8 @@ function scene:create( event )
             -- Set its position on the screen relative to the screen size
             x = display.contentWidth/2,
             y = display.contentHeight*7/8,
+            width = 400,
+            height = 400,
 
             -- Insert the images here
             defaultFile = "Images/Clash.png",
@@ -118,8 +120,10 @@ function scene:create( event )
     pubgC = widget.newButton( 
         {
             -- Set its position on the screen relative to the screen size
-            x = display.contentWidth*7/8.7,
-            y = display.contentHeight*7/8,
+            x = display.contentWidth*7/8.5,
+            y = display.contentHeight*7/8.6,
+            width = 400,
+            height = 400,
 
             -- Insert the images here
             defaultFile = "Images/pubg_PNG46.png",
@@ -138,6 +142,8 @@ function scene:create( event )
             -- Set its position on the screen relative to the screen size
             x = display.contentWidth/5/1,
             y = display.contentHeight*7/8,
+            width = 400,
+            height = 400,
 
             -- Insert the images here
             defaultFile = "Images/Fox.png",
