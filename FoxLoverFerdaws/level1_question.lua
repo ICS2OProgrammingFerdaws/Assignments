@@ -76,7 +76,7 @@ local textTouched = false
 local function BackToLevel1() 
     composer.hideOverlay("crossFade", 400 )
   
-    
+    ResumeGame()
 end 
 
 -----------------------------------------------------------------------------------------
@@ -147,7 +147,7 @@ local function RemoveTextListeners()
 end
 
 local function DisplayQuestion()
-    randomQuestionNum = math.random = (1,10)
+    randomQuestionNum = math.random  (1,10)
     if(randomQuestionNum == 1) then
 
      --creating the question depending on the selcetion number
@@ -163,10 +163,10 @@ local function DisplayQuestion()
 
     elseif(randomQuestionNum == 2) then
      --creating the question depending on the selcetion number
-     questionText.text = "Which animal shares the most DNA \n with humans? "
+     questionText.text = "Which animal shares the\n most DNA  with humans? "
 
      --creating answer text from list it corispondes with the animals list
-     answerText.text = "chimpanzees"
+     answerText.text = "chimpa\nnzees"
     
      --creating wrong answers
      wrongText1.text = "Tiger"
@@ -175,7 +175,7 @@ local function DisplayQuestion()
 
     elseif(randomQuestionNum == 3) then
      --creating the question depending on the selcetion number
-     questionText.text = "On which country is amazon rainforest located?"
+     questionText.text = "On which country is \n amazon rainforest located?"
 
      --creating answer text from list it corispondes with the animals list
      answerText.text = "Brazil"
@@ -188,10 +188,10 @@ local function DisplayQuestion()
     elseif(randomQuestionNum == 4) then
 
      --creating the question depending on the selcetion number
-     questionText.text = "Which animal live in the sea?"
+     questionText.text = "Which animal live\n in the sea?"
 
      --creating answer text from list it corispondes with the animals list
-     answerText.text = "All of the above"
+     answerText.text = "All of \n them"
     
      --creating wrong answers
      wrongText1.text = "Fish "
@@ -214,7 +214,7 @@ local function DisplayQuestion()
     elseif(randomQuestionNum == 6) then
 
      --creating the question depending on the selcetion number
-     questionText.text = "which animal can you keep as a pet?"
+     questionText.text = "which animal can \n you keep as a pet?"
 
      --creating answer text from list it corispondes with the animals list
      answerText.text = "Dog"
@@ -226,7 +226,7 @@ local function DisplayQuestion()
 
     elseif(randomQuestionNum == 7) then
      --creating the question depending on the selcetion number
-     questionText.text = "Which animal can you not keep as a pet?"
+     questionText.text = "Which animal can you\n not keep as a pet?"
      --creating answer text from list it corispondes with the animals list
      answerText.text = "Wolf"
     
@@ -260,7 +260,7 @@ local function DisplayQuestion()
 
     elseif(randomQuestionNum == 10) then
          --creating the question depending on the selcetion number
-     questionText.text = "Which animal does not exect anymore?"
+     questionText.text = "Which animal does\n not exect anymore?"
      --creating answer text from list it corispondes with the animals list
      answerText.text = "Dinosaur"
     
