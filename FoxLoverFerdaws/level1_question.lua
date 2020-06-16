@@ -220,7 +220,7 @@ local function DisplayQuestion()
      answerText.text = "Dog"
     
      --creating wrong answers
-     wrongText1.text = "Alligator"
+     wrongText1.text = "Alli\ngator"
      wrongText2.text = "Wolf"
      wrongText3.text = "Lion"
 

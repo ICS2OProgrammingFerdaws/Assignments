@@ -2,7 +2,7 @@
 --
 -- level1_screen.lua
 -- Created by: Ferdaws
--- Date: Month Day, Year
+-- Date: june. 12, 2020
 -- Description: This is the level 1 screen of the game.
 -----------------------------------------------------------------------------------------
 
@@ -14,6 +14,9 @@
 local composer = require( "composer" )
 local widget = require( "widget" )
 
+-- load physics
+local physics = require("physics")
+
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
@@ -23,6 +26,7 @@ sceneName = "level1_screen"
 
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
+
 
 -----------------------------------------------------------------------------------------
 -- GLOBAl VARIABLES
@@ -90,19 +94,30 @@ local gun2
 local gun3
 local theGun
 
-
 local muteButton
 local unmuteButton
 
-
-
-
 local questionsAnswered = 0
 
+----------------------------------------------------------------------------------------
+-- SOUND FUNCTIONS
+-------------------------------------------------------------------------------------------
+local popSound = audio.loadSound("Sounds/Pop.mp3")
+local popSoundChannel
+
+local youLose = audio.loadSound("Sounds/YouLose.mp3")
+local youLoseCannel
+
+local youWin = audio.loadSound("Sounds/Cheer.m4a")
+local youWinChannel
+
+local bgSoundL1 = audio.loadSound("Sounds/2019-06-18_-_Creepy_Vibes_-_David_Fesliyan.mp3")
+local bgSoundL1Channel
 
 -----------------------------------------------------------------------------------------
--- GLOBAL SCENE FUNCTIONS
-------------------------------------------------------------------------------------------
+-- LOCAL SCENE FUNCTIONS
+----------------------------------------------------------------------------------------- 
+ 
 -- When right arrow is touched, move character right
 local function right (touch)
     motionx = SPEED
@@ -195,12 +210,12 @@ local function RemoveMuteUnmuteListeners( )
 end
 
 local function ReplaceCharacter()
-    character = display.characterChosen
+    character = display.newImageRect("Images/Fox.png", 100, 150)
     character.x = display.contentWidth * 0.5 / 8
     character.y = display.contentHeight  * 0.1 / 3
     character.width = 75
     character.height = 100
-    character.myName = "characterChosen"
+    character.myName = "KickyKat"
 
     -- intialize horizontal movement of character
     motionx = 0
@@ -218,10 +233,10 @@ local function ReplaceCharacter()
     AddRuntimeListeners()
 end
 
-local function MakeSoccerBallsVisible()
-    ball1.isVisible = true
-    ball2.isVisible = true
-    ball3.isVisible = true
+local function MakeSoccermeatsVisible()
+    meat1.isVisible = true
+    meat2.isVisible = true
+    meat3.isVisible = true
 end
 
 local function MakeHeartsVisible()
@@ -236,7 +251,7 @@ local function YouLoseTransition()
 end
 
 local function YouWinTransition()
-    composer.gotoScene( "you_Win" )
+    composer.gotoScene( "you_win" )
 end
 
 
@@ -302,12 +317,12 @@ local function onCollision( self, event )
             end
         end
 
-        if  (event.target.myName == "ball1") or
-            (event.target.myName == "ball2") or
-            (event.target.myName == "ball3") then
+        if  (event.target.myName == "meat1") or
+            (event.target.myName == "meat2") or
+            (event.target.myName == "meat3") then
 
-            -- get the ball that the user hit
-            theBall = event.target
+            -- get the meat that the user hit
+            themeat = event.target
 
             -- stop the character from moving
             motionx = 0
@@ -337,12 +352,8 @@ local function onCollision( self, event )
 end
 
 
-
-
-
-
 local function AddCollisionListeners()
-    -- if character collides with ball, onCollision will be called
+    -- if character collides with meat, onCollision will be called
     spikes1.collision = onCollision
     spikes1:addEventListener( "collision" )
     spikes2.collision = onCollision
@@ -350,13 +361,13 @@ local function AddCollisionListeners()
     spikes3.collision = onCollision
     spikes3:addEventListener( "collision" )
 
-    -- if character collides with ball, onCollision will be called    
-    ball1.collision = onCollision
-    ball1:addEventListener( "collision" )
-    ball2.collision = onCollision
-    ball2:addEventListener( "collision" )
-    ball3.collision = onCollision
-    ball3:addEventListener( "collision" )
+    -- if character collides with meat, onCollision will be called    
+    meat1.collision = onCollision
+    meat1:addEventListener( "collision" )
+    meat2.collision = onCollision
+    meat2:addEventListener( "collision" )
+    meat3.collision = onCollision
+    meat3:addEventListener( "collision" )
     
 
     door.collision = onCollision
@@ -368,9 +379,9 @@ local function RemoveCollisionListeners()
     spikes2:removeEventListener( "collision" )
     spikes3:removeEventListener( "collision" )
 
-    ball1:removeEventListener( "collision" )
-    ball2:removeEventListener( "collision" )
-    ball3:removeEventListener( "collision" )
+    meat1:removeEventListener( "collision" )
+    meat2:removeEventListener( "collision" )
+    meat3:removeEventListener( "collision" )
    
 
     door:removeEventListener( "collision")
@@ -397,9 +408,9 @@ local function AddPhysicsBodies()
     physics.addBody(floor, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(rightW, "static", {density=1, friction=0.3, bounce=0.2} )
 
-    physics.addBody(ball1, "static",  {density=0, friction=0, bounce=0} )
-    physics.addBody(ball2, "static",  {density=0, friction=0, bounce=0} )
-    physics.addBody(ball3, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(meat1, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(meat2, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(meat3, "static",  {density=0, friction=0, bounce=0} )
 
     physics.addBody(door, "static", {density=1, friction=0.3, bounce=0.2})
 
@@ -426,8 +437,9 @@ local function RemovePhysicsBodies()
  
 end
 
-
-
+-----------------------------------------------------------------------------------------
+-- GLOBAL FUNCTIONS
+-----------------------------------------------------------------------------------------
 
 function ResumeGame()
 
@@ -435,9 +447,9 @@ function ResumeGame()
     character.isVisible = true
     
     if (questionsAnswered > 0) then
-        if (theBall ~= nil) and (theBall.isBodyActive == true) then
-            physics.removeBody(theBall)
-            theBall.isVisible = false
+        if (themeat ~= nil) and (themeat.isBodyActive == true) then
+            physics.removeBody(themeat)
+            themeat.isVisible = false
         end
     end
 
@@ -452,15 +464,6 @@ function scene:create( event )
 
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
-
-
-    if (characterChosen == "clashC") then
-       character = display.newImageRect("Images/Clash.png", 100 ,100)
-    elseif (characterChosen == "pubgC") then
-        character = display.newImageRect("Images/pubg_PNG46.png", 200 ,200)
-    elseif (characterChosen == "foxC") then
-        character = display.newImageRect("Images/Fox.png", 200 ,200)
-    end
 
     -- Insert the background image
     bkg_image = display.newImageRect("Images/Bkg.jpg", display.contentWidth, display.contentHeight)
@@ -483,7 +486,7 @@ function scene:create( event )
         
     sceneGroup:insert( platform2 )
 
-    platform3 = display.newImageRect("Images/1Platform.png", 180, 50)
+    platform3 = display.newImageRect("Images/Platform.png", 180, 50)
     platform3.x = display.contentWidth *3 / 5
     platform3.y = display.contentHeight * 3.5 / 5
         
@@ -502,7 +505,7 @@ function scene:create( event )
         
     sceneGroup:insert( spikes1)
 
-    spikes1platform = display.newImageRect("Images/Level-1Platform1.png", 250, 50)
+    spikes1platform = display.newImageRect("Images/Platform.png", 250, 50)
     spikes1platform.x = display.contentWidth * 3 / 8
     spikes1platform.y = display.contentHeight * 2.8 / 5
         
@@ -515,7 +518,7 @@ function scene:create( event )
         
     sceneGroup:insert( spikes2)
 
-    spikes2platform = display.newImageRect("Images/Level-1Platform1.png", 150, 50)
+    spikes2platform = display.newImageRect("Images/Platform2.png", 150, 50)
     spikes2platform.x = display.contentWidth * 6 / 8
     spikes2platform.y = display.contentHeight * 2.2 / 5
         
@@ -528,7 +531,7 @@ function scene:create( event )
         
     sceneGroup:insert( spikes3)
 
-    spikes3platform = display.newImageRect("Images/Level-1Platform2.png", 50, 150)
+    spikes3platform = display.newImageRect("Images/Platform2.png", 50, 150)
     spikes3platform.x = display.contentWidth * 5.8 / 8
     spikes3platform.y = display.contentHeight * 0.4 / 5
         
@@ -543,7 +546,7 @@ function scene:create( event )
     sceneGroup:insert( torchesAndSign )
 
     -- Insert the Door
-    door = display.newImage("Images/Door.jpg", 200, 200)
+    door = display.newImage("Images/Door (2).png", 200, 200)
     door.x = display.contentWidth/5 
     door.y = display.contentHeight*6.1/7
     door.myName = "door"
@@ -628,32 +631,32 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( floor )
 
-    --ball1
-    ball1 = display.newImageRect ("Images/SoccerBall.png", 70, 70)
-    ball1.x = 610
-    ball1.y = 480
-    ball1.myName = "ball1"
+    --meat1
+    meat1 = display.newImageRect ("Images/Meat.png", 70, 70)
+    meat1.x = 610
+    meat1.y = 480
+    meat1.myName = "meat1"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( ball1 )
+    sceneGroup:insert( meat1 )
 
-    --ball2
-    ball2 = display.newImageRect ("Images/SoccerBall.png", 70, 70)
-    ball2.x = 490
-    ball2.y = 170
-    ball2.myName = "ball2"
-
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( ball2 )
-
-    --ball2
-    ball3 = display.newImageRect ("Images/SoccerBall.png", 70, 70)
-    ball3.x = 940
-    ball3.y = 130
-    ball3.myName = "ball3"
+    --meat2
+    meat2 = display.newImageRect ("Images/Meat.png", 70, 70)
+    meat2.x = 490
+    meat2.y = 170
+    meat2.myName = "meat2"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( ball3 )
+    sceneGroup:insert( meat2 )
+
+    --meat2
+    meat3 = display.newImageRect ("Images/Meat.png", 70, 70)
+    meat3.x = 940
+    meat3.y = 130
+    meat3.myName = "meat3"
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( meat3 )
 
     muteButton = display.newImageRect ("Images/Mute.png", 70, 70)
     muteButton.x = 50
@@ -667,9 +670,10 @@ function scene:create( event )
     unmuteButton.y = 730
     unmuteButton.isVisible = true
     sceneGroup:insert(unmuteButton)
+
 end --function scene:create( event )
 
-------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
 
 -- The function called when the scene is issued to appear on screen
 function scene:show( event )
@@ -679,16 +683,6 @@ function scene:show( event )
     local phase = event.phase
 
     -----------------------------------------------------------------------------------------
-
-    if ( phase == "will" ) then
-
-        -- Called when the scene is still off screen (but is about to come on screen).
-    -----------------------------------------------------------------------------------------
-
-    elseif ( phase == "did" ) then
-
-
-     -----------------------------------------------------------------------------------------
 
     if ( phase == "will" ) then
 
@@ -714,8 +708,8 @@ function scene:show( event )
           unmuteButton.isVisible = true
         end
 
-        -- make all soccer balls visible
-        MakeSoccerBallsVisible()
+        -- make all soccer meats visible
+        MakeSoccermeatsVisible()
 
         -- make all lives visible
         MakeHeartsVisible()
@@ -731,11 +725,8 @@ function scene:show( event )
 
         AddMuteUnmuteListeners()
 
-
-        -- Called when the scene is now on screen.
-        -- Insert code here to make the scene come alive.
-        -- Example: start timers, begin animation, play audio, etc.
     end
+
 end --function scene:show( event )
 
 -----------------------------------------------------------------------------------------
@@ -757,7 +748,6 @@ function scene:hide( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
-        -- Called immediately after scene goes off screen.
         audio.stop(bgSoundL1Channel)
         -- Called immediately after scene goes off screen.
         RemoveCollisionListeners()

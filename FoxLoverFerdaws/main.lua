@@ -17,7 +17,7 @@ local composer = require( "composer" )
 -----------------------------------------------------------------------------------------
 
 -- Go to the intro screen
-composer.gotoScene( "level1_question" )
+composer.gotoScene( "splash_screen" )
 
 --------------------------------------------------------------------------------------------------------
 -- Hide the Statusbar 

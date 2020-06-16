@@ -48,8 +48,8 @@ end
 -----------------------------------------------------------------------------------------
 
 -- Creating Transition to Level1 Screen
-local function Level1ScreenTransition( )
-    composer.gotoScene( "level1_screen", {effect = "zoomInOutFade", time = 1000})
+local function CharacterTransition( )
+    composer.gotoScene( "character_selection", {effect = "zoomInOutFade", time = 1000})
 end    
 
 local function InstructionsTransition( )
@@ -102,7 +102,7 @@ function scene:create( event )
             
 
             -- When the button is released, call the Level1 screen transition function
-            onRelease = Level1ScreenTransition          
+            onRelease = CharacterTransition          
         } )
 
     -----------------------------------------------------------------------------------------
