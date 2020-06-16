@@ -107,7 +107,7 @@ function scene:create( event )
             height = 400,
 
             -- Insert the images here
-            defaultFile = "Images/Clash.png",
+            defaultFile = "Images/Clash1.png",
             
 
             -- When the button is released, call the Level1 screen transition function
@@ -126,7 +126,7 @@ function scene:create( event )
             height = 400,
 
             -- Insert the images here
-            defaultFile = "Images/pubg_PNG46.png",
+            defaultFile = "Images/pubg1.png",
             
 
             -- When the button is released, call the Credits transition function
@@ -146,7 +146,7 @@ function scene:create( event )
             height = 400,
 
             -- Insert the images here
-            defaultFile = "Images/Fox.png",
+            defaultFile = "Images/Fox1.png",
             
 
             -- When the button is released, call the Level1 screen transition function
